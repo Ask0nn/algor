@@ -1,9 +1,10 @@
 package com.ask0n;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static final MathFunctions mathFunctions = new MathFunctions();
     private static final Table table = new Table();
 
     private static double startValue;
@@ -12,21 +13,18 @@ public class Main {
     private static int num;
 
     public static void main(String[] args) {
-        int rowNum = 1;
         inputData();
-
         table.create();
 
-        while (startValue <= endValue) {
-            final double value;
+        while (deltaX < 0 ? endValue <= startValue : startValue <= endValue) {
+            final List<Double> value;
             if (num % 2 == 0) {
-                value = mathFunctions.funMax(startValue, num);
+                value = funMax(startValue, num);
             } else {
-                value = mathFunctions.funMin(startValue, num);
+                value = funMin(startValue, num);
             }
 
-            table.insert(rowNum++, startValue,
-                    Double.isNaN(value) ? "Error" : value == 0 ? "Значение sin или cos равно 0" : String.valueOf(value));
+            table.insert(startValue, value.get(0), value.get(1), Double.isNaN(value.get(2)) ? "Error" : value.get(2));
             startValue += deltaX;
         }
 
@@ -35,20 +33,20 @@ public class Main {
 
     public static void inputData() {
         while (true) {
-            startValue = doubleInput("Введите стартовое значение: ");
-            endValue = doubleInput("Введите конечное значение: ");
-            if (startValue < endValue) break;
-            else System.out.println("Стартовое значение не может быть больше либо равно конечному.");
-        }
-        while (true) {
-            deltaX = doubleInput("Введите deltaX (шаг): ");
-            if (deltaX > 0) break;
-            else System.out.println("Шаг должен быть больше 0");
-        }
-        while (true) {
             num = intInput("Введите номер: ");
             if (num > 0) break;
             else System.out.println("Номер должен быть больше 0");
+        }
+        while (true) {
+            deltaX = doubleInput("Введите deltaX (шаг): ");
+            if (deltaX != 0) break;
+            else System.out.println("DeltaX не должен быть равен 0. Введите заного");
+        }
+        while (true) {
+            startValue = doubleInput("Введите стартовое значение: ");
+            endValue = doubleInput("Введите конечное значение: ");
+            if (deltaX < 0 ? endValue <= startValue : startValue <= endValue) break;
+            else System.out.println("Ошибка ввода. Проверьте значения.");
         }
     }
 
@@ -61,7 +59,7 @@ public class Main {
             try {
                 return Double.parseDouble(input.replace(",", "."));
             } catch (NumberFormatException e) {
-                System.out.println("Неверный формат числа, повторите ввод: ");
+                System.out.print("Неверный формат числа, повторите ввод: ");
             }
         }
 
@@ -76,9 +74,25 @@ public class Main {
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Неверный формат числа, повторите ввод: ");
+                System.out.print("Неверный формат числа, повторите ввод: ");
             }
         }
 
+    }
+
+    public static List<Double> funMax(double xDelta, int num) {
+        final double first = customLog((1 - num) / Math.sin(xDelta + num), 21);
+        final double second = Math.abs(Math.cos(xDelta) / num);
+        return Arrays.asList(first, second, Math.max(first, second));
+    }
+
+    public static List<Double> funMin(double xDelta, int num) {
+        final double first = customLog((1 - num) / Math.cos(xDelta - num), 21);
+        final double second = Math.sin(xDelta) / num;
+        return Arrays.asList(first, second, Math.max(first, second));
+    }
+
+    private static double customLog(double base, double logNumber) {
+        return Math.log(logNumber) / Math.log(base);
     }
 }
