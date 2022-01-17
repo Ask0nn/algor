@@ -89,10 +89,10 @@ public class Main {
     public static List<Double> funMin(double xDelta, int num) {
         final double first = customLog((1 - num) / Math.cos(xDelta - num), 21);
         final double second = Math.sin(xDelta) / num;
-        return Arrays.asList(first, second, Math.max(first, second));
+        return Arrays.asList(first, second, Math.min(first, second));
     }
 
-    private static double customLog(double base, double logNumber) {
+    private static double customLog(double logNumber, double base) {
         return Math.log(logNumber) / Math.log(base);
     }
 }
