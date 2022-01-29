@@ -33,20 +33,20 @@ public class Main {
 
     public static void inputData() {
         while (true) {
-            num = intInput("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ: ");
+            num = intInput("Введите номер: ");
             if (num > 0) break;
-            else System.out.println("РќРѕРјРµСЂ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ 0");
+            else System.out.println("Номер должен быть больше 0");
         }
         while (true) {
-            deltaX = doubleInput("Р’РІРµРґРёС‚Рµ deltaX (С€Р°Рі): ");
+            deltaX = doubleInput("Введите deltaX (шаг): ");
             if (deltaX != 0) break;
-            else System.out.println("DeltaX РЅРµ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ СЂР°РІРµРЅ 0. Р’РІРµРґРёС‚Рµ Р·Р°РЅРѕРіРѕ");
+            else System.out.println("DeltaX не должен быть равен 0. Введите заного");
         }
         while (true) {
-            startValue = doubleInput("Р’РІРµРґРёС‚Рµ СЃС‚Р°СЂС‚РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ: ");
-            endValue = doubleInput("Р’РІРµРґРёС‚Рµ РєРѕРЅРµС‡РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ: ");
+            startValue = doubleInput("Введите стартовое значение: ");
+            endValue = doubleInput("Введите конечное значение: ");
             if (deltaX < 0 ? endValue <= startValue : startValue <= endValue) break;
-            else System.out.println("РћС€РёР±РєР° РІРІРѕРґР°. РџСЂРѕРІРµСЂСЊС‚Рµ Р·РЅР°С‡РµРЅРёСЏ.");
+            else System.out.println("Ошибка ввода. Проверьте значения.");
         }
     }
 
@@ -55,11 +55,11 @@ public class Main {
         Scanner in = new Scanner(System.in);
         while (true) {
             String input = in.nextLine();
-            if (input == null) throw new NumberFormatException("РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ С‡РёСЃР»Р°, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ: ");
+            if (input == null) throw new NumberFormatException("Неверный формат числа, повторите ввод: ");
             try {
                 return Double.parseDouble(input.replace(",", "."));
             } catch (NumberFormatException e) {
-                System.out.print("РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ С‡РёСЃР»Р°, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ: ");
+                System.out.print("Неверный формат числа, повторите ввод: ");
             }
         }
 
@@ -70,11 +70,11 @@ public class Main {
         Scanner in = new Scanner(System.in);
         while (true) {
             String input = in.nextLine();
-            if (input == null) throw new NumberFormatException("РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ С‡РёСЃР»Р°, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ: ");
+            if (input == null) throw new NumberFormatException("Неверный формат числа, повторите ввод: ");
             try {
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.print("РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ С‡РёСЃР»Р°, РїРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ: ");
+                System.out.print("Неверный формат числа, повторите ввод: ");
             }
         }
 

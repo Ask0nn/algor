@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
+    id 'application'
 }
 
 group 'com.ask0n'
@@ -8,6 +9,17 @@ version '1.0'
 
 repositories {
     mavenCentral()
+}
+
+mainClassName = 'com.ask0n.Main'
+
+jar {
+    manifest {
+        attributes (
+            'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+            'Main-Class': 'com.ask0n.Main'
+        )
+    }
 }
 
 dependencies {
